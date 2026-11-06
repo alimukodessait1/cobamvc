@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Listing Program - Login System Ali RPL</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f1f5f9;
+            padding: 30px;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        h1 {
+            color: #38bdf8;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        .card {
+            background-color: #1e293b;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+        }
+        .card-header {
+            background-color: #334155;
+            padding: 10px 18px;
+            font-weight: 600;
+            color: #38bdf8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .badge {
+            background-color: #0284c7;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        pre {
+            margin: 0;
+            padding: 16px;
+            background-color: #111827;
+            color: #e2e8f0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+        .keyword { color: #f43f5e; font-weight: bold; }
+        .string { color: #34d399; }
+        .comment { color: #64748b; font-style: italic; }
+        .type { color: #38bdf8; }
+        .btn-print {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .btn-print:hover {
+            background-color: #0369a1;
+        }
+        @media print {
+            body { background: white; color: black; padding: 0; }
+            .card { border: 1px solid #ccc; background: white; color: black; page-break-inside: avoid; }
+            pre { background: #f8fafc; color: black; border-top: 1px solid #ccc; }
+            .btn-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan ke PDF</button>
+        <h1>Listing Program - Laporan Akhir</h1>
+        <p class="subtitle">Aplikasi Java Swing & MySQL | Project: <strong>cobamvc</strong> | Form: <strong>Login System - Ali RPL</strong></p>
+
+        <!-- 1. Koneksi.java -->
+        <div class="card">
+            <div class="card-header">
+                <span>1. Koneksi.java (Koneksi Database MySQL)</span>
+                <span class="badge">Java</span>
+            </div>
+            <pre><code><span class="keyword">package</span> com.mycompany.cobamvc;
+
+<span class="keyword">import</span> java.sql.Connection;
+<span class="keyword">import</span> java.sql.DriverManager;
+<span class="keyword">import</span> java.sql.SQLException;
+<span class="keyword">import</span> javax.swing.JOptionPane;
+
+<span class="keyword">public class</span> <span class="type">Koneksi</span> {
+    <span class="keyword">private static</span> <span class="type">Connection</span> koneksi;
+
+    <span class="keyword">public static</span> <span class="type">Connection</span> getKoneksi() {
+        <span class="keyword">if</span> (koneksi == null) {
+            <span class="keyword">try</span> {
+                <span class="comment">// db_login adalah nama database di phpMyAdmin</span>
+                <span class="type">String</span> url = <span class="string">"jdbc:mysql://localhost:3306/db_login"</span>;
+                <span class="type">String</span> user = <span class="string">"root"</span>;  
+                <span class="type">String</span> pass = <span class="string">""</span>;      
+                
+                DriverManager.registerDriver(<span class="keyword">new</span> com.mysql.cj.jdbc.Driver());
+                koneksi = DriverManager.getConnection(url, user, pass);
+            } <span class="keyword">catch</span> (<span class="type">SQLException</span> e) {
+                JOptionPane.showMessageDialog(null, <span class="string">"Gagal koneksi ke database: "</span> + e.getMessage());
+            }
+        }
+        <span class="keyword">return</span> koneksi;
+    }
+}</code></pre>
+        </div>
+
+        <!-- 2. Cobamvc.java -->
+        <div class="card">
+            <div class="card-header">
+                <span>2. Cobamvc.java (Main Class & Look and Feel)</span>
+                <span class="badge">Java</span>
+            </div>
+            <pre><code><span class="keyword">package</span> com.mycompany.cobamvc;
+
+<span class="keyword">import</span> javax.swing.SwingUtilities;
+<span class="keyword">import</span> javax.swing.UIManager;
+
+<span class="keyword">public class</span> <span class="type">Cobamvc</span> {
+
+    <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
+        SwingUtilities.invokeLater(() -> {
+            <span class="keyword">try</span> {
+                <span class="comment">// Tampilan modern mengikuti tema Windows</span>
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } <span class="keyword">catch</span> (<span class="type">Exception</span> e) {
+                e.printStackTrace();
+            }
+            <span class="keyword">new</span> NewJFrame().setVisible(true);
+        });
+    }
+}</code></pre>
+        </div>
+
+        <!-- 3. NewJFrame.java - Constructor -->
+        <div class="card">
+            <div class="card-header">
+                <span>3. NewJFrame.java - Inisialisasi Judul & Posisi Tengah</span>
+                <span class="badge">Java</span>
+            </div>
+            <pre><code>    <span class="keyword">public</span> NewJFrame() {
+        initComponents();
+        setTitle(<span class="string">"Login System - Ali RPL"</span>);
+        setLocationRelativeTo(null); <span class="comment">// Agar form otomatis di tengah layar</span>
+    }</code></pre>
+        </div>
+
+        <!-- 4. NewJFrame.java - Action Submit -->
+        <div class="card">
+            <div class="card-header">
+                <span>4. NewJFrame.java - Logika Tombol SUBMIT / LOGIN</span>
+                <span class="badge">Java</span>
+            </div>
+            <pre><code>    <span class="keyword">private void</span> bntSUBMITActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        <span class="type">String</span> user = txtUSERNAME.getText();
+        <span class="type">String</span> pass = txtPASSWORD.getText();
+
+        <span class="comment">// 1. Validasi input kosong</span>
+        <span class="keyword">if</span> (user.trim().isEmpty() || pass.trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, <span class="string">"Username dan Password tidak boleh kosong!"</span>);
+            <span class="keyword">return</span>;
+        }
+
+        <span class="comment">// 2. Validasi ke Database MySQL</span>
+        <span class="keyword">try</span> {
+            java.sql.Connection conn = Koneksi.getKoneksi();
+            <span class="type">String</span> sql = <span class="string">"SELECT * FROM users WHERE username = ? AND password = ?"</span>;
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, user);
+            pst.setString(2, pass);
+
+            java.sql.ResultSet rs = pst.executeQuery();
+
+            <span class="keyword">if</span> (rs.next()) {
+                javax.swing.JOptionPane.showMessageDialog(this, <span class="string">"Login Berhasil! Selamat Datang "</span> + user);
+            } <span class="keyword">else</span> {
+                javax.swing.JOptionPane.showMessageDialog(this, <span class="string">"Username atau Password salah!"</span>, <span class="string">"Peringatan"</span>, javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } <span class="keyword">catch</span> (<span class="type">Exception</span> e) {
+            javax.swing.JOptionPane.showMessageDialog(this, <span class="string">"Error: "</span> + e.getMessage());
+        }
+    }</code></pre>
+        </div>
+
+        <!-- 5. pom.xml -->
+        <div class="card">
+            <div class="card-header">
+                <span>5. pom.xml (Driver MySQL Connector & Plugin Jar)</span>
+                <span class="badge">XML</span>
+            </div>
+            <pre><code>    &lt;<span class="keyword">dependencies</span>&gt;
+        &lt;<span class="keyword">dependency</span>&gt;
+            &lt;<span class="keyword">groupId</span>&gt;com.mysql&lt;/<span class="keyword">groupId</span>&gt;
+            &lt;<span class="keyword">artifactId</span>&gt;mysql-connector-j&lt;/<span class="keyword">artifactId</span>&gt;
+            &lt;<span class="keyword">version</span>&gt;8.3.0&lt;/<span class="keyword">version</span>&gt;
+        &lt;/<span class="keyword">dependency</span>&gt;
+    &lt;/<span class="keyword">dependencies</span>&gt;
+    &lt;<span class="keyword">build</span>&gt;
+        &lt;<span class="keyword">plugins</span>&gt;
+            &lt;<span class="keyword">plugin</span>&gt;
+                &lt;<span class="keyword">groupId</span>&gt;org.apache.maven.plugins&lt;/<span class="keyword">groupId</span>&gt;
+                &lt;<span class="keyword">artifactId</span>&gt;maven-jar-plugin&lt;/<span class="keyword">artifactId</span>&gt;
+                &lt;<span class="keyword">version</span>&gt;3.3.0&lt;/<span class="keyword">version</span>&gt;
+                &lt;<span class="keyword">configuration</span>&gt;
+                    &lt;<span class="keyword">archive</span>&gt;
+                        &lt;<span class="keyword">manifest</span>&gt;
+                            &lt;<span class="keyword">mainClass</span>&gt;com.mycompany.cobamvc.Cobamvc&lt;/<span class="keyword">mainClass</span>&gt;
+                        &lt;/<span class="keyword">manifest</span>&gt;
+                    &lt;/<span class="keyword">archive</span>&gt;
+                &lt;/<span class="keyword">configuration</span>&gt;
+            &lt;/<span class="keyword">plugin</span>&gt;
+        &lt;/<span class="keyword">plugins</span>&gt;
+    &lt;/<span class="keyword">build</span>&gt;</code></pre>
+        </div>
+    </div>
+</body>
+</html>
