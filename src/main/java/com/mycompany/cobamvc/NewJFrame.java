@@ -4,6 +4,10 @@
  */
 package com.mycompany.cobamvc;
 
+import com.mycompany.cobamvc.dao.UserDAO;
+import com.mycompany.cobamvc.model.User;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Lenovo
@@ -110,25 +114,25 @@ public class NewJFrame extends javax.swing.JFrame {
         String pass = txtPASSWORD.getText();
 
         if (user.trim().isEmpty() || pass.trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Username dan Password tidak boleh kosong!");
+            JOptionPane.showMessageDialog(this, "Username dan Password tidak boleh kosong!");
             return;
         }
 
         try {
-            // Menggunakan Hibernate ORM via UserDAO
-            com.mycompany.cobamvc.dao.UserDAO userDAO = new com.mycompany.cobamvc.dao.UserDAO();
+            // Menggunakan Spring DAO via Interface UserDAO & UserDaoImpl
+            com.mycompany.cobamvc.dao.UserDAO userDAO = new com.mycompany.cobamvc.dao.UserDaoImpl();
             com.mycompany.cobamvc.model.User userLogin = userDAO.login(user, pass);
 
             if (userLogin != null) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Login Berhasil via Hibernate! Selamat Datang " + userLogin.getUsername());
+                JOptionPane.showMessageDialog(this, "Login Berhasil via Spring DAO & Hibernate! Selamat Datang " + userLogin.getUsername());
                 // Membuka Form Kelola Rental Mobil
                 new FormRentalMobil().setVisible(true);
                 this.dispose();
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Username atau Password salah!", "Peringatan", javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Username atau Password salah!", "Peringatan", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_bntSUBMITActionPerformed
 
